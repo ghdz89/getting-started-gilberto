@@ -1,0 +1,33 @@
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js"></script>
+<script src="https://cdn.plaid.com/link/v2/stable/link-initialize.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js"></script>
+<script>
+  (($) => {
+    const linkToken = localStorage.getItem("link_token");
+
+    const handler = Plaid.create({
+      token: linkToken,
+      receivedRedirectUri: window.location.href,
+      onSuccess: (publicToken, metadata) => {
+        fetch('/api/exchange-public-token', {
+          method: 'POST',
+          body: JSON.stringify({ "public_token": publicToken }),
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          (data) => {
+            location.href = "http://localhost:3005"
+          }
+        });
+        .then(response => response.json())
+        .then(data => console.log(data));
+        console.log(JSON.stringify(data));
+        console.log("hello:", metadata);
+      },
+    });
+
+    window.location.replace = "http://localhost:3005";
+    handler.open();
+  })(jQuery);
+</script>
