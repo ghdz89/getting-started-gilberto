@@ -19,8 +19,8 @@ app.get('/', async (req, res) => {
   res.sendFile(path.join(__dirname, 'index.html'));
 });
 
-app.get('/oauth-link', async (req, res) => {
-  res.sendFile(path.join(__dirname, 'oauth-link.html'));
+app.get('/oauth', async (req, res) => {
+  res.sendFile(path.join(__dirname, 'oauth.html'));
 });
 
 // app.get('/oauth-link', async (req, res) => {
@@ -85,4 +85,4 @@ app.post("/api/exchange-public-token", async (req, res, next) => {
   });
 });
 
-app.listen(process.env.PORT || 3005);
+app.listen(process.env.PORT || 3001);
