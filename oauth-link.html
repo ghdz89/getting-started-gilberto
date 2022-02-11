@@ -1,7 +1,33 @@
-
+<!-- My code copied directly from the OAuth guide -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js"></script>
 <script src="https://cdn.plaid.com/link/v2/stable/link-initialize.js"></script>
+<script>
+  (function ($) {
+    var linkToken = localStorage.getItem("link_token");
+    console.log(linkToken);
+    console.log(typeof(linkToken));
+
+    var handler = Plaid.create({
+      token: linkToken,
+      receivedRedirectUri: window.location.href,
+      onSuccess: function (public_token, metadata) {
+        $.post(
+          "/api/exchange-public-token",
+          { public_token: public_token },
+          function (data) {
+            location.href = "http://localhost:3005/oauth-link";
+          }
+        );
+      },
+    });
+
+    handler.open();
+  })(jQuery);
+</script>
+
+<!-- My code in ES6, not sure if the .then(s) are accurate
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js"></script>
+<script src="https://cdn.plaid.com/link/v2/stable/link-initialize.js"></script>
 <script>
   (($) => {
     const linkToken = localStorage.getItem("link_token");
@@ -30,4 +56,4 @@
     window.location.replace = "http://localhost:3005";
     handler.open();
   })(jQuery);
-</script>
+</script> -->
