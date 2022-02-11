@@ -1,28 +1,31 @@
 
+async function exchangePublicTokenForAccessToken(public_token) {
+  const response = await fetch('/api/exchange-public-token', {
+    method: "POST",
+    headers: { "Content-type": "application/json" },
+    body: JSON.stringify({ "public_token": public_token }),
+  });
+  const data = await response.json();
+  console.log(
+    `This is already stored server-side, but here's your access token ${JSON.stringify(
+      data
+    )}`
+  );
+  //TODO: We probably shouldn't redirect if we get back an error
+  window.location.href = "index.html";
+}
+
 function handleReturningFromOAuth() {
   const link_token = localStorage.getItem("link_token");
   console.log(link_token);
 
   const handler = Plaid.create({
     token: link_token,
-    receivedRedirectUri: window.location.href,
     onSuccess: async (public_token, metadata) => {
       console.log(
         `I have a public token: ${public_token} I should exchange this`
       );
-      const response = await fetch('/api/exchange-public-token', {
-        method: 'POST',
-        body: JSON.stringify({ "public_token": publicToken }),
-        headers: {
-        'Content-Type': 'application/json',
-        },
-      });
-      const data = await response.json();
-      console.log(data);
-      // location.href = "http://localhost:3001";
-      const dataDiv = document.getElementById('data');
-      dataDiv.innerHTML = JSON.stringify(data, null, 2);
-      dataDiv.style.background = "#F6F6F6";
+      await exchangePublicTokenForAccessToken(public_token);
     },
     onExit: (err, metadata) => {
       console.log(
@@ -36,7 +39,8 @@ function handleReturningFromOAuth() {
     },
     onEvent: (eventName, metadata) => {
       console.log(`Event ${eventName}: Data ${JSON.stringify(metadata)}`);
-    }
+    },
+    receivedRedirectUri: window.location.href,
   });
 
   handler.open();
