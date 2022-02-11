@@ -2,37 +2,43 @@
 function handleReturningFromOAuth() {
   const link_token = localStorage.getItem("link_token");
   console.log(link_token);
+
   const handler = Plaid.create({
     token: link_token,
-    onSuccess: async (public_token, metadata) => {
-    console.log(
-      `I have a public token: ${public_token} I should exchange this`
-  );
-  const response = await fetch('/api/exchange-public-token', {
-    method: 'POST',
-    body: JSON.stringify({ "public_token": publicToken }),
-    headers: {
-    'Content-Type': 'application/json',
-    },
-  });
-  const data = await response.json();
-  console.log(data);
-  },
-  onExit: (err, metadata) => {
-    console.log(
-      `I'm all done. Error: ${JSON.stringify(
-      err
-      )} and metadata ${JSON.stringify(metadata)}`
-  );
-  if (err !== undefined) {
-    console.log("something went wrong");
-  }
-  },
-  onEvent: (eventName, metadata) => {
-    console.log(`Event ${eventName}: Data ${JSON.stringify(metadata)}`);
-  },
     receivedRedirectUri: window.location.href,
+    onSuccess: async (public_token, metadata) => {
+      console.log(
+        `I have a public token: ${public_token} I should exchange this`
+      );
+      const response = await fetch('/api/exchange-public-token', {
+        method: 'POST',
+        body: JSON.stringify({ "public_token": publicToken }),
+        headers: {
+        'Content-Type': 'application/json',
+        },
+      });
+      const data = await response.json();
+      console.log(data);
+      // location.href = "http://localhost:3001";
+      const dataDiv = document.getElementById('data');
+      dataDiv.innerHTML = JSON.stringify(data, null, 2);
+      dataDiv.style.background = "#F6F6F6";
+    },
+    onExit: (err, metadata) => {
+      console.log(
+        `I'm all done. Error: ${JSON.stringify(
+        err
+        )} and metadata ${JSON.stringify(metadata)}`
+      );
+      if (err !== undefined) {
+        console.log("something went wrong");
+      }
+    },
+    onEvent: (eventName, metadata) => {
+      console.log(`Event ${eventName}: Data ${JSON.stringify(metadata)}`);
+    }
   });
+
   handler.open();
 }
 handleReturningFromOAuth();

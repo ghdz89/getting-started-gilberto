@@ -19,9 +19,9 @@ app.get('/', async (req, res) => {
   res.sendFile(path.join(__dirname, 'index.html'));
 });
 
-app.get('/oauth', async (req, res) => {
-  res.sendFile(path.join(__dirname, 'oauth.html'));
-});
+// app.get('/oauth', async (req, res) => {
+//   res.sendFile(path.join(__dirname, 'oauth.html'));
+// });
 
 // app.get('/oauth-link', async (req, res) => {
 //   // res.redirect('oauth-link.html');
