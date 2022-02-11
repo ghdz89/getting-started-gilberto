@@ -1,5 +1,45 @@
-<!-- My code copied directly from the OAuth guide -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js"></script>
+<script src="https://cdn.plaid.com/link/v2/stable/link-initialize.js"></script>
+<script>
+  function handleReturningFromOAuth() {
+    const link_token = localStorage.getItem("link_token");
+    console.log(link_token);
+    const handler = Plaid.create({
+      token: link_token,
+      onSuccess: async (public_token, metadata) => {
+        console.log(
+          `I have a public token: ${public_token} I should exchange this`
+        );
+        $.post(
+            "/api/exchange-public-token",
+            { public_token: public_token },
+            function (data) {
+              location.href = "http://localhost:3005/oauth-link";
+            },
+        );
+      },
+      onExit: (err, metadata) => {
+        console.log(
+          `I'm all done. Error: ${JSON.stringify(
+            err
+          )} and metadata ${JSON.stringify(metadata)}`
+        );
+        if (err !== undefined) {
+          console.log("something went wrong");
+        }
+      },
+      onEvent: (eventName, metadata) => {
+        console.log(`Event ${eventName}: Data ${JSON.stringify(metadata)}`);
+      },
+      receivedRedirectUri: window.location.href,
+    });
+    handler.open();
+  }
+  handleReturningFromOAuth();
+</script>
+
+<!-- My code copied directly from the OAuth guide -->
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js"></script>
 <script src="https://cdn.plaid.com/link/v2/stable/link-initialize.js"></script>
 <script>
   (function ($) {
@@ -23,7 +63,7 @@
 
     handler.open();
   })(jQuery);
-</script>
+</script> -->
 
 <!-- My code in ES6, not sure if the .then(s) are accurate
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js"></script>
