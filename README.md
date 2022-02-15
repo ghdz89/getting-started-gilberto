@@ -15,7 +15,7 @@ This is a minimal app that implements Plaid using a very basic HTML and vanilla 
 
 #### Set up your environment
 
-This app uses the latest stable version of Node. At the time of writing, that was Node v16.14.0. It's recommend you use this version of Node to run this app. `nvm` is a useful tool that helps you manage Node versions easily. If you have nvm installed, use the following command to set up your environment:
+This app uses the latest stable version of Node. At the time of writing, that was Node v16.14.0. It's recommend you use this version of Node to run this app. nvm is a useful tool that helps you manage Node versions easily. You can install it by following the instructions in the [nvm-sh/nvm](https://github.com/nvm-sh/nvm#installing-and-updating) repo. If you have nvm installed, you can use the following command to set up your environment:
 
 ```bash
 nvm install --lts && nvm use --lts
@@ -96,3 +96,7 @@ To experience an OAuth flow in this app:
 5. On the next page, you don't need to enter any information. Simply click "Get code" to proceed.
 
 6. On the next page, simply click "Submit" to proceed.
+
+7. On the next page, check at least 1 account. Click "Continue".
+
+8. On the next page, check the terms and conditions checkbox. Click "Connect account information."
