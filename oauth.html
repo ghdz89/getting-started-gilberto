@@ -1,16 +1,42 @@
+<!-- Reinitialize Link on this page in the body via a script,
+  redirect them back to home page
+-->
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Welcome back!</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js"></script>
+    <title></title>
   </head>
   <body>
-    <div class="m-5 text-center" id="userMessage">Finishing up...</div>
     <script src="https://cdn.plaid.com/link/v2/stable/link-initialize.js"></script>
-    <script src="oauth.js"></script>
-    <h1>hi</h1>
+    <script>
+      (($) => {
+        const linkToken = localStorage.getItem("link_token");
+
+        const handler = Plaid.create({
+          token: linkToken,
+          receivedRedirectUri: window.location.href,
+          onSuccess: async (publicToken, metadata) => {
+            await fetch('/api/exchange-public-token', {
+              method: 'POST',
+              body: JSON.stringify({ "public_token": publicToken }),
+              headers: {
+                'Content-Type': 'application/json',
+              },
+            });
+
+            const response = await fetch('/api/data', {
+              method: 'GET',
+            });
+            const data = await response.json();
+            localStorage.setItem('transactions', JSON.stringify(data));
+            location.href = "http://localhost:3002";
+          },
+        });
+
+        handler.open();
+      })(jQuery);
+    </script>
+  
   </body>
 </html>

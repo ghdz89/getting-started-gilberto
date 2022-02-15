@@ -4,6 +4,7 @@ const bodyParser = require("body-parser");
 const session = require("express-session");
 const { Configuration, PlaidApi, PlaidEnvironments } = require("plaid");
 const path = require('path');
+const { emitWarning } = require("process");
 
 const app = express();
 
@@ -22,18 +23,6 @@ app.get('/', async (req, res) => {
 app.get('/oauth', async (req, res) => {
   res.sendFile(path.join(__dirname, 'oauth.html'));
 });
-
-// app.get('/oauth-link', async (req, res) => {
-//   // res.redirect('oauth-link.html');
-//   // console.log(req.query);
-//   let oauth_state_id = req.query.oauth_state_id;
-//   res.redirect('/oauth-link?oauth_state_id=' + req.query.oauth_state_id);
-// });
-
-// app.get('/oauth-link', async (req, res) => {
-//   let oauth_state_id = req.query.oauth_state_id;
-//   res.redirect('/oauth-link?oauth_state_id=' + req.query.oauth_state_id);
-// });
   
 // Configuration for the Plaid client
 const config = new Configuration({
@@ -63,8 +52,7 @@ app.get("/api/create-link-token", async (req, res, next) => {
   res.json(tokenResponse.data);
 });
 
-// Exchange the public_token from Plaid Link for an access_token, 
-// then fetch some transactions data from the Plaid API
+// Exchange the public_token from Plaid Link for an access_token
 app.post("/api/exchange-public-token", async (req, res, next) => {
   const exchangeResponse = await client.itemPublicTokenExchange({
     public_token: req.body.public_token,
@@ -72,12 +60,18 @@ app.post("/api/exchange-public-token", async (req, res, next) => {
 
   // TODO: store access_token in DB instead of session storage
   req.session.access_token = exchangeResponse.data.access_token;
+  res.json(true);
+
+});
+
+// Fetch some transactions data from the Plaid API
+app.get("/api/data", async (req, res, next) => {
   const access_token = req.session.access_token;
-  
+
   const transactionsResponse = await client.transactionsGet({
     start_date: '2021-05-03',
     end_date: '2021-05-13',
-    access_token,
+    access_token: access_token,
   });
 
   res.json({
@@ -85,4 +79,4 @@ app.post("/api/exchange-public-token", async (req, res, next) => {
   });
 });
 
-app.listen(process.env.PORT || 3003);
+app.listen(process.env.PORT || 3002);
