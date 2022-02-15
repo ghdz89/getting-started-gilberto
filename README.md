@@ -6,7 +6,7 @@ This is a minimal app that implements Plaid using a very basic HTML/vanilla JS f
 
 - **index.html** – A basic HTML page with a button that allows the user to link a sample account. Clicking the button will start the Plaid Link flow. Successfully linking an account via Link will render results on this page.
 
-- **index.js** – Configures the Plaid client and uses Express to defines routes that call Plaid endpoints in the [Sandbox environment](https://plaid.com/docs/quickstart/glossary/#environments). Utilizes the official [Plaid node.js client library](https://github.com/plaid/plaid-node) to make calls to the Plaid API.
+- **server.js** – Configures the Plaid client and uses Express to defines routes that call Plaid endpoints in the [Sandbox environment](https://plaid.com/docs/quickstart/glossary/#environments). Utilizes the official [Plaid node.js client library](https://github.com/plaid/plaid-node) to make calls to the Plaid API.
 
 - **oauth.html** – Link is re-initialized on this page during the OAuth flow. After successfully re-initializing Link and completing the Link flow, the end user is redirected back home.
 
@@ -133,3 +133,5 @@ PLAID_SANDBOX_REDIRECT_URI=http://localhost:8080/oauth
 14. Link will connect the account at the OAuth bank, prompt you to continue, and then redirect you back to the home page.
 
 ### Troubleshooting
+
+tbd
