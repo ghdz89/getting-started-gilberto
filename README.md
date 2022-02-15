@@ -90,15 +90,9 @@ PLAID_SANDBOX_REDIRECT_URI=http://localhost:8080/oauth
 
 7. On the "Select your bank" screen, type "oauth" into the search bar. Select "Platypus OAuth Bank".
 
-[screenshot]
-
 8. On the next screen, select the first instance of "Platypus OAuth Bank". 
 
-[screenshot]
-
 9. Click "Continue" when prompted. You'll be redirected to the login page for "First Platypus Bank". **Important**: Credentials are not necessary for this bank. Simply click "Sign in" to proceed.
-
-[screenshot]
 
 10. On the next page, you won't need to enter any information. Simply click "Get code" to proceed.
 
@@ -110,8 +104,14 @@ PLAID_SANDBOX_REDIRECT_URI=http://localhost:8080/oauth
 
 14. Link will connect the account at the OAuth bank, prompt you to continue, and then redirect you back to the home page.
 
+For more information on OAuth with Plaid, see the [OAuth Guide](https://plaid.com/docs/link/oauth/) in Plaid's documentation.
+
 ### Troubleshooting
 
-##### MISSING_FIELDS error
+#### MISSING_FIELDS error
 
 If you encounter a **MISSING_FIELDS** error, it's possible you did not properly fill out the **.env** file. Be sure to add your client ID and Sandbox secret to the corresponding variables in the file.
+
+#### OAuth flow fails to start
+
+Ensure you've added the redirect URI present in the **.env** file as a [configured URI in your Plaid account](https://dashboard.plaid.com/team/api). The two values should be identical.
