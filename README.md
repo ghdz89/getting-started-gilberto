@@ -4,9 +4,9 @@
 
 This is a minimal app that implements Plaid using a very basic HTML/vanilla JS front end with an Express/Node backend. The "Link account" button in the app allows you to link a sample bank account. After linking the account, the app retrieves balance information associated with the account and renders it on the home page. Here's a short description of the key files in this repo:
 
-- **index.html** – A basic HTML page with a button that allows the user to link a sample account. Clicking the button will start the Link flow. Successfully linking an account via Link will render results on this page.
+- **index.html** – A basic HTML page with a button that allows the user to link a sample account. Clicking the button will start the Plaid Link flow. Successfully linking an account via Link will render results on this page.
 
-- **index.js** – Configures the Plaid client and uses Express to defines routes that call Plaid endpoints. Utilizes the official [Plaid node.js client library](https://github.com/plaid/plaid-node) to make calls to the Plaid API.
+- **index.js** – Configures the Plaid client and uses Express to defines routes that call Plaid endpoints in the [Sandbox environment](https://plaid.com/docs/quickstart/glossary/#environments). Utilizes the official [Plaid node.js client library](https://github.com/plaid/plaid-node) to make calls to the Plaid API.
 
 - **oauth.html** – Link is re-initialized on this page during the OAuth flow. After successfully re-initializing Link and completing the Link flow, the end user is redirected back home.
 
@@ -54,7 +54,7 @@ To make calls to the Plaid API, you'll need to get keys to the API. You can obta
 touch .env
 ```
 
-Add the following lines of code to the **.env ** file:
+Add the following lines of code to the **.env** file:
 
 ```
 PLAID_CLIENT_ID=
@@ -62,7 +62,7 @@ PLAID_SECRET=
 PLAID_ENV=sandbox
 ```
 
-4. Set the variables in the **.env** file to the corresponding credentials provided in your Plaid account. Don't place any quotes (`"`) around the credentials. Use the "Sandbox" secret when setting the `PLAID_SECRET` variable.
+4. Next, set the variables in the **.env** file to the corresponding credentials provided in your Plaid account. Don't place any quotes (`"`) around the credentials (i.e., `PLAID_CLIENT_ID=adn08a280hqdaj0ad`). Use the "Sandbox" secret when setting the `PLAID_SECRET` variable.
 
 
 5. Finally, start the app:
@@ -75,39 +75,61 @@ The app will run on port 8080. Navigate to `localhost:8080`.
 
 ### Using the app
 
-
+The app allows you to link a sample bank account at an OAuth bank or a non-OAuth bank. For more information on how to link accounts at both types of banks, see the sections below.
 
 #### Non-OAuth banks
 
-This app uses Plaid's sandbox environment for demonstrative purposes. When connecting a non-OAuth bank account via Link, use the following sample credentials:
+Most banks returned by Link in the app are non-OAuth banks. When connecting a non-OAuth bank account, use the following sample credentials:
 
-User name: `user_good`
-Password: `pass_good`
+- Username: `user_good`
+- Password: `pass_good`
 
-If you encounter a bank that requires multi-factor authentication ("MFA"), enter the following code to proceed:
+If you select a bank that requires multi-factor authentication ("MFA"), enter the following code to proceed:
 
 `1234`
 
 #### OAuth banks
 
-For banks that use OAuth, end users temporarily leave Link to authenticate and permission data using the institution's website or mobile app instead. Afterward, they're redirected back to Link to complete the Link flow and return control to the application.
+For banks that use OAuth, end users temporarily leave Link to authenticate and permission data using the institution's website or mobile app instead. Afterward, they're redirected back to Link to complete the Link flow and return control to the application. In this app, the "Platypus OAuth Bank" is an OAuth bank.
 
 To experience an OAuth flow in this app:
 
-1. Click the button to link an account.
+1. Navigate to [**Team Settings > API**](https://dashboard.plaid.com/team/api) in your Plaid account.
 
-2. In the subsequent screen, type "oauth" in the search bar. 
+2. In the **Allowed redirect URIs** section, click "Configure".
 
-3. Select the first search result returned ("Platypus OAuth Bank"). Click "Continue" when prompted.
+3. Add "http://localhost:8080/oauth" as a redirect URI and save your changes.
 
-4. You'll be redirected to the login page for "First Platypus Bank". There are no sample credentials necessary for this bank. Simply click "Sign in" to proceed.
+4. Navigate to the **.env** file in your project directory. Add the following line of code to the end of the file:
 
-5. On the next page, you don't need to enter any information. Simply click "Get code" to proceed.
+```bash
+PLAID_SANDBOX_REDIRECT_URI=http://localhost:8080/oauth
+```
 
-6. On the next page, simply click "Submit" to proceed.
+5. Save your changes to the file and restart your local server (i.e., end the current server process and run `npm start` again).
 
-7. On the next page, check at least 1 account. Click "Continue".
+6. Navigate to `localhost:8080`. Click the **Link account** button to link an account.
 
-8. On the next page, check the terms and conditions checkbox. Click "Connect account information."
+7. On the subsequent screen, type "oauth" in Link's search bar. Select "Platypus OAuth Bank".
+
+[screenshot]
+
+8. On the next screen, select the first instance of "Platypus OAuth Bank". 
+
+[screenshot]
+
+9. Click "Continue" when prompted. You'll be redirected to the login page for "First Platypus Bank". **Important** There are no sample redentials necessary for this bank. Simply click "Sign in" to proceed.
+
+[screenshot]
+
+10. On the next page, you won't need to enter any information. Simply click "Get code" to proceed.
+
+11. On the next page, you won't need to enter any information. Simply click "Submit" to proceed.
+
+12. On the next page, check at least 1 account. Click "Continue" to proceed.
+
+13. On the next page, check the terms and conditions checkbox. Click "Connect account information."
+
+14. Link will connect the account at the OAuth bank, prompt you to continue, and then redirect you back to the home page.
 
 ### Troubleshooting
