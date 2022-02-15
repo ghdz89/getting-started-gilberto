@@ -2,11 +2,11 @@
 
 ### Get familiar
 
-This is a minimal app that implements Plaid using a very basic HTML and vanilla JS front end with an Express/Node backend. After linking a financial account, this app will retrieve transactions information and render it on the home page. Here's a short description of the key files in this repo:
+This is a minimal app that implements Plaid using a very basic HTML and vanilla JS front end with an Express/Node backend. After linking a financial account, this app will retrieve transactions associated with the account and render them on the home page. Here's a short description of the key files in this repo:
 
-- **index.html** – A basic HTML page with a nav bar and button. Clicking the button will commence the Link flow. Successfully linking an account via Link will render results on this page.
+- **index.html** – A basic HTML page with a nav bar and button. Clicking the button will start the Link flow. Successfully linking an account via Link will render results on this page.
 
-- **index.js** – Configures the Plaid client and defines endpoints that call Plaid endpoints. Utilizes the official [node.js client library](https://github.com/plaid/plaid-node) for the Plaid API.
+- **index.js** – Configures the Plaid client and uses Express to defines routes that call Plaid endpoints. Utilizes the official [node.js client library](https://github.com/plaid/plaid-node) to make calls to the Plaid API.
 
 - **oauth.html** – Link is re-initialized on this page during the OAuth flow. After successfully re-initializing Link and completing the Link flow, the end user is redirected back home.
 
@@ -15,7 +15,9 @@ This is a minimal app that implements Plaid using a very basic HTML and vanilla 
 
 #### Set up your environment
 
-This app uses the latest stable version of Node. At the time of writing, that was Node v16.14.0. It's recommend you use this version of Node to run this app. nvm is a useful tool that helps you manage Node versions easily. You can install it by following the instructions in the [nvm-sh/nvm](https://github.com/nvm-sh/nvm#installing-and-updating) repo. If you have nvm installed, you can use the following command to set up your environment:
+This app uses the latest stable version ("LTS") of Node. At the time of writing, that was Node v16.14.0. It's recommended you use this version of Node to run this app. 
+
+nvm is a useful tool that helps you manage Node versions easily. To determine whether you have it installed, simply type `nvm` into your terminal. If you encounter an error (i.e., "command not found", etc.), you likely do not have nvm installed. You can install nvm by following the [instructions in the nvm-sh/nvm](https://github.com/nvm-sh/nvm#installing-and-updating) repo. Once you have nvm installed, you can use the following command to set up your environment:
 
 ```bash
 nvm install --lts && nvm use --lts
@@ -41,18 +43,22 @@ npm install
 
 To make calls to the Plaid API, you'll need to equip the app with the necessary credentials. You can obtain the necessary credentials by following these steps:
 
-1. [Create a Plaid account](https://dashboard.plaid.com/signup?email=&referrer_url=)
+1. [Create a Plaid account](https://dashboard.plaid.com/signup?email=&referrer_url=).
 
 2. After successfully creating your account, navigate to **Team Settings > Keys**. Here, you'll find your client ID and secrets. You'll need these to make calls to the Plaid API.
 
-3. Next, create a **.env** in the root of the project directory. Fill it with the following:
+[screenshot]
+
+3. Navigate to the project directory and create a **.env** file. Fill it with the following:
+
+```bash
+cd repo-name && touch .env
+```
 
 ```
 PLAID_CLIENT_ID=
 PLAID_SECRET=
 PLAID_ENV=sandbox
-
-PLAID_SANDBOX_REDIRECT_URI=http://localhost:3002/oauth
 ```
 
 4. Set these variables to the corresponding credentials provided in your Plaid account. Don't place any quotes (`"`) around the credentials. Use the "Sandbox" secret when setting the `PLAID_SECRET` variable. For information the `PLAID_SANDBOX_REDIRECT_URI` variable, see [section](...).
@@ -64,7 +70,7 @@ PLAID_SANDBOX_REDIRECT_URI=http://localhost:3002/oauth
 npm start
 ```
 
-The app will run on port 3002. Ensure this port is available for use on your local machine.
+The app will run on port 3002. Ensure this port is available for use on your local machine. Navigate to `localhost:3002`. 
 
 ### Connecting accounts
 
@@ -100,3 +106,5 @@ To experience an OAuth flow in this app:
 7. On the next page, check at least 1 account. Click "Continue".
 
 8. On the next page, check the terms and conditions checkbox. Click "Connect account information."
+
+### Troubleshooting

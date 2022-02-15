@@ -16,6 +16,7 @@
           return linkToken;
         }
 
+        //Initialize Link
         const handler = Plaid.create({
           token: await createLinkToken(),
           onSuccess: async (publicToken, metadata) => {
@@ -32,12 +33,13 @@
             });
 
             const data = await response.json();
-            const dataDiv = document.getElementById('data');
-            dataDiv.innerHTML = JSON.stringify(data, null, 2);
-            dataDiv.style.background = "#F6F6F6";
+
+            const responseDiv = document.getElementById('response');
+            responseDiv.innerHTML = JSON.stringify(data, null, 2);
+            responseDiv.style.background = "#F6F6F6";
           },
-          onEvent: (metadata) => {
-            console.log(metadata);
+          onEvent: (eventName, metadata) => {
+            console.log(eventName, metadata);
           },
           onExit: (error, metadata) => {
             console.log(error, metadata);
@@ -51,27 +53,10 @@
       })(jQuery);
     </script>
   </head>
-  <title></title>
+  <title>Plaid | Minimal Quickstart</title>
   <body>
-    <nav class="navbar navbar-light" style="background: #111111;">
-      <div class="container-fluid" style="background: #111111;">
-        <span class="navbar-brand mb-0 h1"><strong style="font-size: xx-large;color: white;">Hello World 🌎</strong></span>
-      </div>
-    </nav>
-    <div class="container">
-      <div class="row">
-        <div class="col-md-3 offset-md-3">
-          <button type="button" class="btn btn-lg" id="plaid-button" style="margin-top:40;color: white;background: #0A85EA;">Link account</button> 
-        </div>
-      </div>
-    </div>
-    <div class="container">
-      <div class="row">
-        <div class="col-md-3 offset-md-3">
-          <pre id="data" style="top:200;bottom:0;position: fixed;overflow-y: scroll;overflow-x: hidden;">
-          </pre>
-        </div>
-      </div>
-    </div>
+    <button type="button" class="btn btn-lg btn-dark" id="plaid-button" style="margin-top: 5;margin-left: 10;"><strong>Link account</strong></button> 
+    <pre id="response" style="top: 60;margin-left: 10;bottom: 0;position: fixed;overflow-y: scroll;overflow-x: hidden;">
+    </pre>
   </body>
 </html>

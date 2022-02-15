@@ -4,13 +4,12 @@ const bodyParser = require("body-parser");
 const session = require("express-session");
 const { Configuration, PlaidApi, PlaidEnvironments } = require("plaid");
 const path = require('path');
-const { emitWarning } = require("process");
-
 const app = express();
 
 app.use(
-  // TODO: use a real secret key
-  session({ secret: "keyboard cat", saveUninitialized: true, resave: true })
+  // FOR DEMO PURPOSES ONLY
+  // Use an actual secret key in production
+  session({ secret: "bosco", saveUninitialized: true, resave: true })
 );
 
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -43,39 +42,34 @@ const client = new PlaidApi(config);
 app.get("/api/create-link-token", async (req, res, next) => {
   const tokenResponse = await client.linkTokenCreate({
     user: { client_user_id: req.sessionID },
-    client_name: "Plaid Hello World",
+    client_name: "Plaid's Minimal Quickstart",
     language: "en",
-    products: ["transactions"],
+    products: ["auth"],
     country_codes: ["US", "CA"],
     redirect_uri: process.env.PLAID_SANDBOX_REDIRECT_URI,
   });
   res.json(tokenResponse.data);
 });
 
-// Exchange the public_token from Plaid Link for an access_token
+// Exchange the public token from Plaid Link for an access token
 app.post("/api/exchange-public-token", async (req, res, next) => {
   const exchangeResponse = await client.itemPublicTokenExchange({
     public_token: req.body.public_token,
   });
 
-  // TODO: store access_token in DB instead of session storage
+  // FOR DEMO PURPOSES ONLY
+  // Store access_token in DB instead of session storage
   req.session.access_token = exchangeResponse.data.access_token;
   res.json(true);
 
 });
 
-// Fetch some transactions data from the Plaid API
+// Fetch balance data using Plaid
 app.get("/api/data", async (req, res, next) => {
   const access_token = req.session.access_token;
-
-  const transactionsResponse = await client.transactionsGet({
-    start_date: '2021-05-03',
-    end_date: '2021-05-13',
-    access_token: access_token,
-  });
-
+  const balanceResponse = await client.accountsBalanceGet({ access_token });
   res.json({
-    Transactions: transactionsResponse.data,
+    Balance: balanceResponse.data,
   });
 });
 
