@@ -38,20 +38,20 @@ const config = new Configuration({
 //Instantiate the Plaid client with the configuration
 const client = new PlaidApi(config);
 
-//Create a Link token and return it
+//Creates a Link token and return it
 app.get("/api/create-link-token", async (req, res, next) => {
   const tokenResponse = await client.linkTokenCreate({
     user: { client_user_id: req.sessionID },
     client_name: "Plaid's Minimal Quickstart",
     language: "en",
-    products: ["auth", "transactions"],
+    products: ["auth"],
     country_codes: ["US", "CA"],
     redirect_uri: process.env.PLAID_SANDBOX_REDIRECT_URI,
   });
   res.json(tokenResponse.data);
 });
 
-// Exchange the public token from Plaid Link for an access token
+// Exchanges the public token from Plaid Link for an access token
 app.post("/api/exchange-public-token", async (req, res, next) => {
   const exchangeResponse = await client.itemPublicTokenExchange({
     public_token: req.body.public_token,
@@ -63,21 +63,19 @@ app.post("/api/exchange-public-token", async (req, res, next) => {
   res.json(true);
 });
 
-app.get("/api/is_user_connected", async (req, res, next) => {
-  if (req.session.access_token != null) {
-    res.json({ connected: true });
-  } else {
-    res.json({ connected: false });
-  }
-});
-
-// Fetch balance data using Plaid
+// Fetches balance data using the Node client library for Plaid
 app.get("/api/data", async (req, res, next) => {
   const access_token = req.session.access_token;
   const balanceResponse = await client.accountsBalanceGet({ access_token });
   res.json({
     Balance: balanceResponse.data,
   });
+});
+
+// Checks whether the user's account is connected, called
+// in index.html when redirected from oauth.html
+app.get("/api/is_account_connected", async (req, res, next) => {
+  return (req.session.access_token ? res.json({ status: true }) : res.json({ status: false}));
 });
 
 app.listen(process.env.PORT || 8080);
