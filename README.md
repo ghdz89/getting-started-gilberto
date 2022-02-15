@@ -29,7 +29,20 @@ npm start
 
 The app will run on port XXXX. Ensure this port is available on your local machine.
 
-#### The OAuth flow
+#### Connecting accounts
 
-##### Non-OAuth banks
+##### Non-OAuth Banks
+
+This app uses Plaid's sandbox environment for demonstrative purposes. When connecting a non-OAuth bank account via Link, use the following sample credentials:
+
+User name: `user_good`
+Password: `pass_good`
+
+If you encounter a bank that requires multi-factor authentication ("MFA"), enter the following code to proceed:
+
+`1234`
+
+#####
+
+
 
