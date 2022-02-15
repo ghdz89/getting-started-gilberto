@@ -3,7 +3,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const session = require("express-session");
 const { Configuration, PlaidApi, PlaidEnvironments } = require("plaid");
-const path = require('path');
+const path = require("path");
 const app = express();
 
 app.use(
@@ -15,14 +15,14 @@ app.use(
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-app.get('/', async (req, res) => {
-  res.sendFile(path.join(__dirname, 'index.html'));
+app.get("/", async (req, res) => {
+  res.sendFile(path.join(__dirname, "index.html"));
 });
 
-app.get('/oauth', async (req, res) => {
-  res.sendFile(path.join(__dirname, 'oauth.html'));
+app.get("/oauth", async (req, res) => {
+  res.sendFile(path.join(__dirname, "oauth.html"));
 });
-  
+
 // Configuration for the Plaid client
 const config = new Configuration({
   basePath: PlaidEnvironments[process.env.PLAID_ENV],
@@ -34,7 +34,7 @@ const config = new Configuration({
     },
   },
 });
-  
+
 //Instantiate the Plaid client with the configuration
 const client = new PlaidApi(config);
 
@@ -44,7 +44,7 @@ app.get("/api/create-link-token", async (req, res, next) => {
     user: { client_user_id: req.sessionID },
     client_name: "Plaid's Minimal Quickstart",
     language: "en",
-    products: ["auth"],
+    products: ["auth", "transactions"],
     country_codes: ["US", "CA"],
     redirect_uri: process.env.PLAID_SANDBOX_REDIRECT_URI,
   });
@@ -61,7 +61,14 @@ app.post("/api/exchange-public-token", async (req, res, next) => {
   // Store access_token in DB instead of session storage
   req.session.access_token = exchangeResponse.data.access_token;
   res.json(true);
+});
 
+app.get("/api/is_user_connected", async (req, res, next) => {
+  if (req.session.access_token != null) {
+    res.json({ connected: true });
+  } else {
+    res.json({ connected: false });
+  }
 });
 
 // Fetch balance data using Plaid
