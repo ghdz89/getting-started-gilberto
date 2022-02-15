@@ -39,7 +39,8 @@
             responseDiv.style.background = "#F6F6F6";
           },
           onEvent: (eventName, metadata) => {
-            console.log(eventName, metadata);
+            console.log("Event:", eventName);
+            console.log("Metadata:", metadata)
           },
           onExit: (error, metadata) => {
             console.log(error, metadata);

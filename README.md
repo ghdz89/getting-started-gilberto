@@ -1,21 +1,21 @@
 # README
 
-### Get familiar
+### Overview
 
-This is a minimal app that implements Plaid using a very basic HTML and vanilla JS front end with an Express/Node backend. After linking a financial account, this app will retrieve transactions associated with the account and render them on the home page. Here's a short description of the key files in this repo:
+This is a minimal app that implements Plaid using a very basic HTML/vanilla JS front end with an Express/Node backend. After linking an account, the app retrieves balance information associated with the account and renders it on the home page. Here's a short description of the key files in this repo:
 
-- **index.html** – A basic HTML page with a nav bar and button. Clicking the button will start the Link flow. Successfully linking an account via Link will render results on this page.
+- **index.html** – A basic HTML page with a button that allows the user to link an account. Clicking the button will start the Link flow. Successfully linking an account via Link will render results on this page.
 
-- **index.js** – Configures the Plaid client and uses Express to defines routes that call Plaid endpoints. Utilizes the official [node.js client library](https://github.com/plaid/plaid-node) to make calls to the Plaid API.
+- **index.js** – Configures the Plaid client and uses Express to defines routes that call Plaid endpoints. Utilizes the official [Plaid node.js client library](https://github.com/plaid/plaid-node) to make calls to the Plaid API.
 
 - **oauth.html** – Link is re-initialized on this page during the OAuth flow. After successfully re-initializing Link and completing the Link flow, the end user is redirected back home.
 
 
-### Run the app
+### Running the app
 
 #### Set up your environment
 
-This app uses the latest stable version ("LTS") of Node. At the time of writing, that was Node v16.14.0. It's recommended you use this version of Node to run this app. 
+This app uses the latest stable version ("LTS") of Node. At the time of writing, the LTS is Node v16.14.0. It's recommended you use this version of Node to run this app. 
 
 nvm is a useful tool that helps you manage Node versions easily. To determine whether you have it installed, simply type `nvm` into your terminal. If you encounter an error (i.e., "command not found", etc.), you likely do not have nvm installed. You can install nvm by following the [instructions in the nvm-sh/nvm](https://github.com/nvm-sh/nvm#installing-and-updating) repo. Once you have nvm installed, you can use the following command to set up your environment:
 

@@ -25,7 +25,7 @@
               method: 'GET',
             });
             const data = await response.json();
-            location.href = "http://localhost:3002";            
+            window.location.href = "http://localhost:3002";            
           },
           onEvent: (eventName, metadata) => {
             console.log(eventName, metadata);
