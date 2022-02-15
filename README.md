@@ -6,7 +6,7 @@ This is a minimal app that implements Plaid using a very basic HTML and vanilla 
 
 - **index.html** – A basic HTML page with a nav bar and button. Clicking the button will commence the Link flow. Successfully linking an account via Link will render results on this page.
 
-- **index.js** – Configures the Plaid client and defines endpoints that call Plaid endpoints. Utilizes the offical [node.js client library](#https://github.com/plaid/plaid-node) for the Plaid API.
+- **index.js** – Configures the Plaid client and defines endpoints that call Plaid endpoints. Utilizes the official [node.js client library](https://github.com/plaid/plaid-node) for the Plaid API.
 
 - **oauth.html** – Link is re-initialized on this page during the OAuth flow. After successfully re-initializing Link and completing the Link flow, the end user is redirected back home.
 
@@ -15,29 +15,33 @@ This is a minimal app that implements Plaid using a very basic HTML and vanilla 
 
 #### Set up your environment
 
-This app uses the latest stable version of Node. At the time of writing, that was Node v16.14.0. It's recommend you use this version of Node to run this app. `nvm` is a useful tool that helps you manage Node versions easily.
+This app uses the latest stable version of Node. At the time of writing, that was Node v16.14.0. It's recommend you use this version of Node to run this app. `nvm` is a useful tool that helps you manage Node versions easily. If you have nvm installed, use the following command to set up your environment:
+
+```bash
+nvm install --lts && nvm use --lts
+```
 
 #### Clone the app
 
-Clone the app:
+Clone the app to your machine:
 
 ```bash
-git clone ...
+git clone https://github.com/ghdz89/getting-started-gilberto.git
 ```
 
 #### Install dependencies
 
-After confirming that you're using the recommended Node version, navigate to the root of the project directory and install the necessary dependencies:
+Navigate to the root of the project directory and install the necessary dependencies:
 
 ```bash
 npm install
 ```
 
-#### Equip yourself with credentials
+#### Equip the app with credentials
 
 To make calls to the Plaid API, you'll need to equip the app with the necessary credentials. You can obtain the necessary credentials by following these steps:
 
-1. [Create a Plaid account](#https://dashboard.plaid.com/signup?email=&referrer_url=)
+1. [Create a Plaid account](https://dashboard.plaid.com/signup?email=&referrer_url=)
 
 2. After successfully creating your account, navigate to **Team Settings > Keys**. Here, you'll find your client ID and secrets. You'll need these to make calls to the Plaid API.
 
@@ -47,18 +51,20 @@ To make calls to the Plaid API, you'll need to equip the app with the necessary 
 PLAID_CLIENT_ID=
 PLAID_SECRET=
 PLAID_ENV=sandbox
+
+PLAID_SANDBOX_REDIRECT_URI=http://localhost:3002/oauth
 ```
 
-4. Finally, set these variables to the corresponding credentials provided in your Plaid account. Don't place any quotes (`"`) around the credentials. Use the "Sandbox" secret when setting the `PLAID_SECRET` variable.
+4. Set these variables to the corresponding credentials provided in your Plaid account. Don't place any quotes (`"`) around the credentials. Use the "Sandbox" secret when setting the `PLAID_SECRET` variable. For information the `PLAID_SANDBOX_REDIRECT_URI` variable, see [section](...).
 
 
-Next, start the app:
+5. Finally, start the app:
 
 ```bash
 npm start
 ```
 
-The app will run on port XXXX. Ensure this port is available on your local machine.
+The app will run on port 3002. Ensure this port is available for use on your local machine.
 
 ### Connecting accounts
 
@@ -77,6 +83,16 @@ If you encounter a bank that requires multi-factor authentication ("MFA"), enter
 
 For banks that use OAuth, end users temporarily leave Link to authenticate and permission data using the institution's website or mobile app instead. Afterward, they're redirected back to Link to complete the Link flow and return control to the application.
 
-For an OAuth
+To experience an OAuth flow in this app:
 
+1. Click the button to link an account.
 
+2. In the subsequent screen, type "oauth" in the search bar. 
+
+3. Select the first search result returned ("Platypus OAuth Bank"). Click "Continue" when prompted.
+
+4. You'll be redirected to the login page for "First Platypus Bank". There are no sample credentials necessary for this bank. Simply click "Sign in" to proceed.
+
+5. On the next page, you don't need to enter any information. Simply click "Get code" to proceed.
+
+6. On the next page, simply click "Submit" to proceed.
