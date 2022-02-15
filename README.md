@@ -13,6 +13,15 @@ This is a minimal app that implements Plaid using a very basic HTML/vanilla JS f
 
 ### Running the app
 
+
+#### Clone the app
+
+Clone the app to your machine and cd into the project directory:
+
+```bash
+git clone https://github.com/plaid/FIX ME] && cd FIX ME
+```
+
 #### Set up your environment
 
 This app uses the latest stable version ("LTS") of Node. At the time of writing, the LTS of Node is v16.14.0. It's recommended you use this version of Node to run this app. 
@@ -21,14 +30,6 @@ nvm is a useful tool that helps you manage Node versions easily. To determine wh
 
 ```bash
 nvm install --lts && nvm use --lts
-```
-
-#### Clone the app
-
-Clone the app to your machine and cd into the project directory:
-
-```bash
-git clone https://github.com/plaid/FIX ME] && cd FIX ME
 ```
 
 #### Install dependencies
