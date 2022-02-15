@@ -66,7 +66,9 @@ PLAID_ENV=sandbox
 4. Next, set the variables in the **.env** file to the corresponding credentials provided in your Plaid account. Don't place any quotes (`"`) around the credentials (i.e., `PLAID_CLIENT_ID=adn08a280hqdaj0ad`). Use the "Sandbox" secret when setting the `PLAID_SECRET` variable.
 
 
-5. Finally, start the app:
+#### Start the server
+
+Start the app by running the following command:
 
 ```bash
 npm start
