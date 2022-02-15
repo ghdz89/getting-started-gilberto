@@ -21,11 +21,11 @@
                 "Content-Type": "application/json",
               },
             });
-            // const response = await fetch("/api/data", {
-            //   method: "GET",
-            // });
-            // const data = await response.json();
-            window.location.href = "http://localhost:8080/";
+            const response = await fetch('/api/data', {
+              method: 'GET',
+            });
+            const data = await response.json();
+            window.location.href = "http://localhost:8080";          
           },
           onEvent: (eventName, metadata) => {
             console.log(eventName, metadata);
