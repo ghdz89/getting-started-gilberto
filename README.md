@@ -2,9 +2,9 @@
 
 ### Overview
 
-This is a minimal app that implements Plaid using a very basic HTML/vanilla JS front end with an Express/Node backend. The "Link account" button in the app allows you to link a sample bank account. After linking the account, the app retrieves balance information associated with the account and renders it on the home page. Here's a short description of the key files in this repo:
+This is a minimal app that implements Plaid using a very basic HTML/vanilla JS frontend with an Express/Node backend. The app retrieves balance information associated with a sample sandbox account and renders it on the home page. Here's a short description of the key files in this repo:
 
-- **index.html** – A basic HTML page with a button that allows the user to link a sample account. Clicking the button will start the Plaid Link flow. Successfully linking an account via Link will render results on this page.
+- **index.html** – An HTML page that allows the user to link a sample account. Clicking the button will start the Plaid Link flow. Successfully linking an account via Link will render results on this page.
 
 - **server.js** – Configures the Plaid client and uses Express to defines routes that call Plaid endpoints in the [Sandbox environment](https://plaid.com/docs/quickstart/glossary/#environments). Utilizes the official [Plaid node.js client library](https://github.com/plaid/plaid-node) to make calls to the Plaid API.
 
@@ -13,24 +13,17 @@ This is a minimal app that implements Plaid using a very basic HTML/vanilla JS f
 
 ### Running the app
 
-
 #### Clone the app
 
 Clone the app to your machine and cd into the project directory:
 
 ```bash
-git clone https://github.com/plaid/FIX ME] && cd FIX ME
+git clone https://github.com/plaid/FIX ME && cd FIX ME
 ```
 
 #### Set up your environment
 
-This app uses the latest stable version ("LTS") of Node. At the time of writing, the LTS of Node is v16.14.0. It's recommended you use this version of Node to run this app. 
-
-nvm is a useful tool that helps you manage Node versions easily. To determine whether you have it installed, simply type `nvm` into your terminal. If you encounter an error (i.e., "command not found", etc.), you likely do not have nvm installed. You can install nvm by following the [instructions in the nvm-sh/nvm repo](https://github.com/nvm-sh/nvm#installing-and-updating). Once you have nvm installed, you can use the following command to set up your environment:
-
-```bash
-nvm install --lts && nvm use --lts
-```
+This app uses the latest stable version of Node. At the time of writing, the latest stable version is v16.14.0. It's recommended you use this version of Node to run this app. For information on installing Node, see [How to install Node.js](https://nodejs.dev/learn/how-to-install-nodejs).
 
 #### Install dependencies
 
@@ -42,29 +35,13 @@ npm install
 
 #### Equip the app with credentials
 
-To make calls to the Plaid API, you'll need keys to the API. You can obtain API keys by following these steps:
+Run the following command to copy the included **.env.example** to a file called **.env**.
 
-1. [Create a Plaid account](https://dashboard.plaid.com/signup?email=&referrer_url=).
-
-2. After successfully creating your account, navigate to [**Team Settings > Keys**](https://dashboard.plaid.com/team/keys) in your account. Here, you'll find your client ID and secrets. These are the keys you'll need to make calls to the Plaid API.
-
-[screenshot]
-
-3. Create a file called **.env** in the project directory.
 ```bash
-touch .env
+cp .env.example .env
 ```
 
-Add the following lines of code to the **.env** file:
-
-```
-PLAID_CLIENT_ID=
-PLAID_SECRET=
-PLAID_ENV=sandbox
-```
-
-4. Next, set the variables in the **.env** file to the corresponding credentials provided in your Plaid account. Don't place any quotes (`"`) around the credentials (i.e., `PLAID_CLIENT_ID=adn08a280hqdaj0ad`). Use the "Sandbox" secret when setting the `PLAID_SECRET` variable.
-
+Fill out the contents of the **.env** file with the [client ID and Sandbox secret in your Plaid dashboard](https://dashboard.plaid.com/team/keys). Don't place quotes (`"`) around the credentials (i.e., `PLAID_CLIENT_ID=adn08a280hqdaj0ad`). Use the "Sandbox" secret when setting the `PLAID_SECRET` variable.
 
 #### Start the server
 
@@ -87,7 +64,7 @@ Most banks returned by Link in the app are non-OAuth banks. When connecting a no
 - Username: `user_good`
 - Password: `pass_good`
 
-If you select a bank that requires multi-factor authentication ("MFA"), enter the following code to proceed: `1234`
+If you select a bank that requires multi-factor authentication, enter the following code to proceed: `1234`
 
 #### OAuth banks
 
@@ -109,9 +86,9 @@ PLAID_SANDBOX_REDIRECT_URI=http://localhost:8080/oauth
 
 5. Save your changes to the file and restart your local server (i.e., end the current server process and run `npm start` again).
 
-6. Navigate to `localhost:8080`. Click the **Link account** button to link an account.
+6. Navigate to `localhost:8080` and proceed to link an account.
 
-7. On the subsequent screen, type "oauth" in Link's search bar. Select "Platypus OAuth Bank".
+7. On the "Select your bank" screen, type "oauth" into the search bar. Select "Platypus OAuth Bank".
 
 [screenshot]
 
@@ -135,4 +112,6 @@ PLAID_SANDBOX_REDIRECT_URI=http://localhost:8080/oauth
 
 ### Troubleshooting
 
-tbd
+##### MISSING_FIELDS error
+
+If you encounter a **MISSING_FIELDS** error, it's possible you did not properly fill out the **.env** file. Be sure to add your client ID and Sandbox secret to the corresponding variables in the file.
