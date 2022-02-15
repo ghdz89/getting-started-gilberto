@@ -15,7 +15,7 @@ This is a minimal app that implements Plaid using a very basic HTML/vanilla JS f
 
 #### Set up your environment
 
-This app uses the latest stable version ("LTS") of Node. At the time of writing, the LTS is Node v16.14.0. It's recommended you use this version of Node to run this app. 
+This app uses the latest stable version ("LTS") of Node. At the time of writing, the LTS of Node is v16.14.0. It's recommended you use this version of Node to run this app. 
 
 nvm is a useful tool that helps you manage Node versions easily. To determine whether you have it installed, simply type `nvm` into your terminal. If you encounter an error (i.e., "command not found", etc.), you likely do not have nvm installed. You can install nvm by following the [instructions in the nvm-sh/nvm repo](https://github.com/nvm-sh/nvm#installing-and-updating). Once you have nvm installed, you can use the following command to set up your environment:
 
