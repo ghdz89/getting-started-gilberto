@@ -1,5 +1,6 @@
 /*
-This file configures the Plaid client and uses Express to defines routes that call Plaid endpoints in the Sandbox environment. It also utilizes the official Plaid node.js client library to make calls to the Plaid API.
+This file configures the Plaid client and uses Express to defines routes that call Plaid endpoints in the Sandbox environment. 
+It also utilizes the official Plaid node.js client library to make calls to the Plaid API.
 */
 
 require("dotenv").config();

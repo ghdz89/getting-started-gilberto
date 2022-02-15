@@ -2,14 +2,7 @@
 
 ### Overview
 
-This is a minimal app that implements Plaid using a very basic HTML/vanilla JS frontend with an Express/Node backend. The app retrieves balance information associated with a sample sandbox account and renders it on the home page. Here's a short description of the key files in this repo:
-
-- **index.html** – An HTML page that allows the user to link a sample account. Clicking the button will start the Plaid Link flow. Successfully linking an account via Link will render results on this page.
-
-- **server.js** – Configures the Plaid client and uses Express to defines routes that call Plaid endpoints in the [Sandbox environment](https://plaid.com/docs/quickstart/glossary/#environments). Utilizes the official [Plaid node.js client library](https://github.com/plaid/plaid-node) to make calls to the Plaid API.
-
-- **oauth.html** – Link is re-initialized on this page during the OAuth flow. After successfully re-initializing Link and completing the Link flow, the end user is redirected back home.
-
+This is a minimal app that implements Plaid using a very basic HTML/vanilla JS frontend with an Express/Node backend. The app retrieves balance information associated with a sample sandbox account and renders it on the home page.
 
 ### Running the app
 
