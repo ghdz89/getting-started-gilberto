@@ -41,7 +41,7 @@ npm install
 
 #### Equip the app with credentials
 
-To make calls to the Plaid API, you'll need to get keys to the API. You can obtain API keys by following these steps:
+To make calls to the Plaid API, you'll need keys to the API. You can obtain API keys by following these steps:
 
 1. [Create a Plaid account](https://dashboard.plaid.com/signup?email=&referrer_url=).
 
@@ -71,7 +71,7 @@ PLAID_ENV=sandbox
 npm start
 ```
 
-The app will run on port 8080. Navigate to `localhost:8080`. 
+The app will run on port 8080. To use the app, navigate to `localhost:8080` in your browser. 
 
 ### Using the app
 
@@ -84,13 +84,11 @@ Most banks returned by Link in the app are non-OAuth banks. When connecting a no
 - Username: `user_good`
 - Password: `pass_good`
 
-If you select a bank that requires multi-factor authentication ("MFA"), enter the following code to proceed:
-
-`1234`
+If you select a bank that requires multi-factor authentication ("MFA"), enter the following code to proceed: `1234`
 
 #### OAuth banks
 
-For banks that use OAuth, end users temporarily leave Link to authenticate and permission data using the institution's website or mobile app instead. Afterward, they're redirected back to Link to complete the Link flow and return control to the application. In this app, the "Platypus OAuth Bank" is an OAuth bank.
+With OAuth banks, end users temporarily leave Link to authenticate and permission data using the bank's website (or mobile app) instead. Afterward, they're redirected back to Link to complete the Link flow and return control to the application where the account is being linked. In this app, "Platypus OAuth Bank" is an OAuth bank.
 
 To experience an OAuth flow in this app:
 
@@ -98,7 +96,7 @@ To experience an OAuth flow in this app:
 
 2. In the **Allowed redirect URIs** section, click "Configure".
 
-3. Add "http://localhost:8080/oauth" as a redirect URI and save your changes.
+3. Add `http://localhost:8080/oauth` as a redirect URI and save your changes.
 
 4. Navigate to the **.env** file in your project directory. Add the following line of code to the end of the file:
 
@@ -118,7 +116,7 @@ PLAID_SANDBOX_REDIRECT_URI=http://localhost:8080/oauth
 
 [screenshot]
 
-9. Click "Continue" when prompted. You'll be redirected to the login page for "First Platypus Bank". **Important** There are no sample redentials necessary for this bank. Simply click "Sign in" to proceed.
+9. Click "Continue" when prompted. You'll be redirected to the login page for "First Platypus Bank". **Important**: Credentials are not necessary for this bank. Simply click "Sign in" to proceed.
 
 [screenshot]
 
