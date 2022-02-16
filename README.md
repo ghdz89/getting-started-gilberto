@@ -2,7 +2,7 @@
 
 ### Overview
 
-This is a minimal app that implements Plaid using a very basic HTML/vanilla JS frontend with an Express/Node backend. The app retrieves balance information associated with a sample sandbox account and renders it on the home page.
+This is a minimal app that implements Plaid using a very basic HTML/vanilla JS frontend with an Express/Node backend. After linking a sample bank account, the app retrieves balance information associated with the account and renders it on the home page.
 
 ### Running the app
 
@@ -11,12 +11,12 @@ This is a minimal app that implements Plaid using a very basic HTML/vanilla JS f
 Clone the app to your machine and cd into the project directory:
 
 ```bash
-git clone https://github.com/plaid/FIX ME && cd FIX ME
+git clone https://github.com/plaid/tiny-quickstart && cd tiny-quickstart
 ```
 
 #### Set up your environment
 
-This app uses the latest stable version of Node. At the time of writing, the latest stable version is v16.14.0. It's recommended you use this version of Node to run this app. For information on installing Node, see [How to install Node.js](https://nodejs.dev/learn/how-to-install-nodejs).
+This app uses the latest stable version of Node. At the time of writing, the latest stable version is v16.14.0. It's recommended you use this version of Node to run the app. For information on installing Node, see [How to install Node.js](https://nodejs.dev/learn/how-to-install-nodejs).
 
 #### Install dependencies
 
@@ -93,7 +93,7 @@ PLAID_SANDBOX_REDIRECT_URI=http://localhost:8080/oauth
 
 12. On the next page, check at least 1 account. Click "Continue" to proceed.
 
-13. On the next page, check the terms and conditions checkbox. Click "Connect account information."
+13. On the next page, check the terms and conditions checkbox. Click "Connect account information".
 
 14. Link will connect the account at the OAuth bank, prompt you to continue, and then redirect you back to the home page.
 
